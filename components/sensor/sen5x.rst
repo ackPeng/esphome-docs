@@ -3,7 +3,7 @@ SEN5X and SEN6X Series Environmental sensor
 
 .. seo::
     :description: Instructions for setting up SEN5X and SEN6X Series Environmental sensor for PM, RH/T, VOC, NOx, CO2 and HCHO measurements.
-    :image: sen54.jpg
+    :image: sen54.png
     :keywords: Sensirion, SEN50, SEN54, SEN55, SEN5X, SEN60, SEN63C, SEN65, SEN66, SEN68
 
 The ``sen5x`` sensor platform allows you to use your Sensirion `SEN50 <https://sensirion.com/products/catalog/SEN50/>`__, `SEN54 <https://sensirion.com/products/catalog/SEN54/>`__ , `SEN55 <https://sensirion.com/products/catalog/SEN55/>`__ , `SEN60 <https://sensirion.com/products/catalog/SEN60/>`__  , `SEN63C <https://sensirion.com/products/catalog/SEN63C/>`__  , `SEN65 <https://sensirion.com/products/catalog/SEN65/>`__  , `SEN66 <https://sensirion.com/products/catalog/SEN66/>`__  and `SEN68 <https://sensirion.com/products/catalog/SEN68/>`__  Environmental sensors with ESPHome.
@@ -14,7 +14,7 @@ Only I²C communication is implemented in this component.
 .. _Sensirion SEN6X Series: https://sensirion.com/sen6x-air-quality-sensor-platform
 
 
-.. figure:: images/sen54.jpg
+.. figure:: images/sen54.png
     :align: center
     :width: 50.0%
 
