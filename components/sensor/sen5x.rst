@@ -21,7 +21,7 @@ Only I²C communication is implemented in this component.
            SEN54
 
       - .. figure:: images/sen66.png
-            :width: 45.0%
+          :width: 45.0%
 
            SEN66
 
