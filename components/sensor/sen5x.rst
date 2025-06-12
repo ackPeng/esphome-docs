@@ -13,14 +13,17 @@ Only I²C communication is implemented in this component.
 .. _Sensirion SEN5X Series: https://sensirion.com/products/catalog/SEK-SEN5x
 .. _Sensirion SEN6X Series: https://sensirion.com/sen6x-air-quality-sensor-platform
 
+.. list-table:: 
 
-.. figure:: images/sen54.png
-    :align: center
-    :width: 50.0%
+    * - .. figure:: images/sen54.png
+          :width: 45.0%
+           
+           SEN54
 
-.. figure:: images/sen66.png
-    :align: center
-    :width: 50.0%
+      - .. figure:: images/sen66.png
+            :width: 45.0%
+
+           SEN66
 
 .. figure:: images/sen54-web.png
     :align: center
@@ -122,6 +125,7 @@ Configuration variables:
   - All other options from :ref:`Sensor <config-sensor>`.
 
 - **nox** (*Optional*): NOx Index. Note: Only available with SEN55, SEN65, SEN66 or SEN68. The sensor will be ignored on unsupported models.
+
   - **algorithm_tuning** (*Optional*): The NOx algorithm can be customized by tuning 5 different parameters. For more details see `Engineering Guidelines for SEN5x <https://sensirion.com/media/documents/25AB572C/62B463AA/Sensirion_Engineering_Guidelines_SEN5x.pdf>`__
 
     - **index_offset** (*Optional*): NOx index representing typical (average) conditions. Allowed values are in range 1..250. The default value is 100.
@@ -176,23 +180,33 @@ Both the SEN5X and SEN6X sensors have a JST GHR-06V-S 6 pin type connector, with
     :width: 50.0%
 
 For the SEN5X sensors:
-- 1 is connected to 5V
-- 2 is connected to ground
-- 3 is SDA
-- 4 is SCL
-- 5 is SEL, must be connected to ground in order to work with this component.
-- 6 is no-connect
+
+- Pin 1 - 5V
+
+- Pin 2 - GND
+
+- Pin 3 - SDA
+
+- Pin 4 - SCL
+
+- Pin 5 - SEL, Must be connected to GND, enabling the I²C interface in order to work with this component.
+
+- Pin 6 - no-connect
 
 For the SEN6X sensors:
-- 1 is connected to 3.3V
-- 2 is connected to ground
-- 3 is SDA
-- 4 is SCL
-- 5 is connected to ground
-- 6 is connected to 3.3V
 
-For SEN5X sensors you must connect pin no. 5 ground enabling the I²C interface. 
-Since the SEN5X sensors have a dual interface (UART/I²C) you must connect pin-5 to ground enabling the only the I²C interface. The SEN6X sensors only support an I²C interface. Pin no.5 is still connected to ground (pin no.2). Pin 6 is not used on the SEN5X sensors. But on the SEN6X sensors it can be connected VDD or (pin no. 1).
+- Pin 1 - 3.3V
+
+- Pin 2 - GND
+
+- Pin 3 - SDA
+
+- Pin 4 - SCL
+
+- Pin 5 - GND
+
+- Pin 6 - 3.3V
+
 
 Automatic Cleaning:
 -------------------
