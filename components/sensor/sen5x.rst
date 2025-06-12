@@ -1,17 +1,26 @@
-SEN5X Series Environmental sensor
+SEN5X and SEN6X Series Environmental sensor
 =================================
 
 .. seo::
-    :description: Instructions for setting up SEN5X Series Environmental sensor for PM, RH/T, VOC, and NOx measurements.
+    :description: Instructions for setting up SEN5X and SEN6X Series Environmental sensor for PM, RH/T, VOC, NOx, CO2 and HCHO measurements.
     :image: sen54.jpg
+    :keywords: Sensirion, SEN50, SEN54, SEN55, SEN5X, SEN60, SEN63C, SEN65, SEN66, SEN68
 
-The ``sen5x`` and ``sen6x`` sensor platform allows you to use your Sensirion `SEN50 <https://sensirion.com/products/catalog/SEN50/>`__, `SEN54 <https://sensirion.com/products/catalog/SEN54/>`__ , `SEN55 <https://sensirion.com/products/catalog/SEN55/>`__ , `SEN60 <https://sensirion.com/products/catalog/SEN60/>`__  , `SEN63C <https://sensirion.com/products/catalog/SEN63C/>`__  , `SEN65 <https://sensirion.com/products/catalog/SEN65/>`__  , `SEN66 <https://sensirion.com/products/catalog/SEN66/>`__  and `SEN68 <https://sensirion.com/products/catalog/SEN68/>`__  Environmental sensors with ESPHome.
+The ``sen5x`` sensor platform allows you to use your Sensirion `SEN50 <https://sensirion.com/products/catalog/SEN50/>`__, `SEN54 <https://sensirion.com/products/catalog/SEN54/>`__ , `SEN55 <https://sensirion.com/products/catalog/SEN55/>`__ , `SEN60 <https://sensirion.com/products/catalog/SEN60/>`__  , `SEN63C <https://sensirion.com/products/catalog/SEN63C/>`__  , `SEN65 <https://sensirion.com/products/catalog/SEN65/>`__  , `SEN66 <https://sensirion.com/products/catalog/SEN66/>`__  and `SEN68 <https://sensirion.com/products/catalog/SEN68/>`__  Environmental sensors with ESPHome.
 The :ref:`I²C Bus <i2c>` is required to be set up in your configuration for this sensor to work.
 Only I²C communication is implemented in this component.
 
 .. _Sensirion SEN5X Series: https://sensirion.com/products/catalog/SEK-SEN5x
 .. _Sensirion SEN6X Series: https://sensirion.com/sen6x-air-quality-sensor-platform
 
+
+.. figure:: images/sen54.jpg
+    :align: center
+    :width: 50.0%
+
+.. figure:: images/sen66.png
+    :align: center
+    :width: 50.0%
 
 .. figure:: images/sen54-web.png
     :align: center
@@ -92,14 +101,14 @@ Configuration variables:
 
   - All options from :ref:`Sensor <config-sensor>`.
 
-- **co2** (*Optional*): Carbon dioxide (CO₂). Note only applies to SEN63C or SEN66. The sensor will be ignored on unsupported models.
+- **co2** (*Optional*): Carbon dioxide (CO₂). Note: Only available with SEN63C or SEN66. The sensor will be ignored on unsupported models.
   - **auto_self_calibration** (*Optional*): True enables automatic CO₂ self calibration. False disables automatic CO₂ calibration.
   - **altitude_compensation** (*Optional*): Enable compensating deviations due to current altitude (in meters). Notice: Set altitude_compensation or ambient_pressure_compensation_source but not both.
   - **ambient_pressure_compensation_source** (*Optional*): Set an external pressure sensor ID used for ambient pressure compensation. The pressure sensor must report pressure in hPa. The correction is applied before updating the state of the CO₂ sensor.
 
   - All options from :ref:`Sensor <config-sensor>`.
 
-- **voc** (*Optional*): VOC Index. Note only available with SEN54, SEN55, SEN65, SEN66 and SEN68. The sensor will be ignored on unsupported models.
+- **voc** (*Optional*): VOC Index. Note: Only available with SEN54, SEN55, SEN65, SEN66 or SEN68. The sensor will be ignored on unsupported models.
 
   - **algorithm_tuning** (*Optional*): The VOC algorithm can be customized by tuning 6 different parameters. For more details see `Engineering Guidelines for SEN5X <https://sensirion.com/media/documents/25AB572C/62B463AA/Sensirion_Engineering_Guidelines_SEN5x.pdf>`__
 
@@ -150,7 +159,7 @@ Configuration variables:
   Medium and high accelerations are particularly indicated for air quality monitors which are subjected to large temperature changes. Low acceleration is advised for stationary devices not subject to large variations in temperature
 
 - **address** (*Optional*, int): Manually specify the I²C address of the sensor.
-  Defaults to ``0x69``.But for Sen66 the default is ``0x6b``
+  Defaults to ``0x69`` for the SEN5X sensors or ``0x6b`` for the SEN6X sensors.
 
 .. note::
 
@@ -229,7 +238,7 @@ Only the SEN63C and the SEN66 have a CO₂ sensor.
 ``sen5x.perform_forced_co2_calibration`` Action
 ------------------------------------
 
-This :ref:`action <config-action>` forces a manual calibration on the CO₂ sensor. Basically, the unit is forced to make current measurements equal to the specified value.
+This :ref:`action <config-action>` forces a manual calibration on the CO₂ sensor.
 
 .. code-block:: yaml
   number:
