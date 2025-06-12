@@ -6,27 +6,24 @@ SEN5X and SEN6X Series Environmental sensor
     :image: sen54.png
     :keywords: Sensirion, SEN50, SEN54, SEN55, SEN5X, SEN60, SEN63C, SEN65, SEN66, SEN68
 
-The ``sen5x`` sensor platform allows you to use your Sensirion `SEN50 <https://sensirion.com/products/catalog/SEN50/>`__, `SEN54 <https://sensirion.com/products/catalog/SEN54/>`__ , `SEN55 <https://sensirion.com/products/catalog/SEN55/>`__ , `SEN60 <https://sensirion.com/products/catalog/SEN60/>`__  , `SEN63C <https://sensirion.com/products/catalog/SEN63C/>`__  , `SEN65 <https://sensirion.com/products/catalog/SEN65/>`__  , `SEN66 <https://sensirion.com/products/catalog/SEN66/>`__  and `SEN68 <https://sensirion.com/products/catalog/SEN68/>`__  Environmental sensors with ESPHome.
-The :ref:`I²C Bus <i2c>` is required to be set up in your configuration for this sensor to work.
-Only I²C communication is implemented in this component.
+The ``sen5x`` sensor platform allows you to use your Sensirion `SEN5X Series`_ or `SEN6X Series`_ Environmental sensors with ESPHome.
+This component only supports I²C communication thus the :ref:`I²C Bus <i2c>` is required. The SEN5X sensor must be configured for I²C communication.
 
-.. _Sensirion SEN5X Series: https://sensirion.com/products/catalog/SEK-SEN5x
-.. _Sensirion SEN6X Series: https://sensirion.com/sen6x-air-quality-sensor-platform
+.. _SEN5X Series: https://sensirion.com/products/catalog/SEK-SEN5x
 
-.. list-table:: 
+.. _SEN6X Series: https://sensirion.com/sen6x-air-quality-sensor-platform
 
-    * - .. figure:: images/sen54.png
-          :width: 45.0%
-           
-           SEN54
+.. figure:: images/sen54.png
+   :width: 45% 
 
-      - .. figure:: images/sen66.png
-          :width: 45.0%
+   SEN5X Series
 
-           SEN66
+.. figure:: images/sen66.png
+   :width: 45% 
+
+   SEN6X Series
 
 .. figure:: images/sen54-web.png
-    :align: center
     :width: 100.0%
 
 .. code-block:: yaml
@@ -78,33 +75,32 @@ Only I²C communication is implemented in this component.
 Configuration variables:
 ------------------------
 
-- **pm_1_0** (*Optional*): The information for the **Weight Concentration** sensor for fine particles up to 1μm. Readings in µg/m³.
+- **pm_1_0** (*Optional*): The mass of fine particles up to 1μm. Readings in µg/m³.
 
   - All options from :ref:`Sensor <config-sensor>`.
 
-- **pm_2_5** (*Optional*): The information for the **Weight Concentration** sensor for fine particles up to 2.5μm. Readings in µg/m³.
+- **pm_2_5** (*Optional*): The mass of fine particles up to 2.5μm. Readings in µg/m³.
 
   - All options from :ref:`Sensor <config-sensor>`.
 
-- **pm_4_0** (*Optional*): The information for the **Weight Concentration** sensor for coarse particles up to 4μm. Readings in µg/m³.
+- **pm_4_0** (*Optional*): The mass of coarse particles up to 4μm. Readings in µg/m³.
 
   - All options from :ref:`Sensor <config-sensor>`.
 
-- **pm_10_0** (*Optional*): The information for the **Weight Concentration** sensor for coarse particles up to 10μm. Readings in µg/m³.
+- **pm_10_0** (*Optional*): The mass of coarse particles up to 10μm. Readings in µg/m³.
 
   - All options from :ref:`Sensor <config-sensor>`.
 
-- **auto_cleaning_interval** (*Optional*): Reads/Writes the interval in seconds of the periodic fan-cleaning.
-
-- **temperature** (*Optional*): Temperature.Note only available with Sen54 or Sen55. The sensor will be ignored on unsupported models.
+- **temperature** (*Optional*): Temperature. Note: Only available with SEN54, SEN55, SEN63C, SEN65, SEN66 or SEN68. The sensor will be ignored on unsupported models.
 
   - All options from :ref:`Sensor <config-sensor>`.
 
-- **humidity** (*Optional*): Relative Humidity. Note only available with Sen54 or Sen55. The sensor will be ignored on unsupported models.
+- **humidity** (*Optional*): Relative Humidity. Note: Only available with SEN54, SEN55, SEN63C, SEN65, SEN66 or SEN68. The sensor will be ignored on unsupported models.
 
   - All options from :ref:`Sensor <config-sensor>`.
 
 - **co2** (*Optional*): Carbon dioxide (CO₂). Note: Only available with SEN63C or SEN66. The sensor will be ignored on unsupported models.
+
   - **auto_self_calibration** (*Optional*): True enables automatic CO₂ self calibration. False disables automatic CO₂ calibration.
   - **altitude_compensation** (*Optional*): Enable compensating deviations due to current altitude (in meters). Notice: Set altitude_compensation or ambient_pressure_compensation_source but not both.
   - **ambient_pressure_compensation_source** (*Optional*): Set an external pressure sensor ID used for ambient pressure compensation. The pressure sensor must report pressure in hPa. The correction is applied before updating the state of the CO₂ sensor.
@@ -118,7 +114,7 @@ Configuration variables:
     - **index_offset** (*Optional*): VOC index representing typical (average) conditions. Allowed values are in range 1..250. The default value is 100.
     - **learning_time_offset_hours** (*Optional*): Time constant to estimate the VOC algorithm offset from the history in hours. Past events will be forgotten after about twice the  learning time. Allowed values are in range 1..1000. The default value is 12 hour
     - **learning_time_gain_hours** (*Optional*): Time constant to estimate the VOC algorithm gain from the history in hours. Past events will be forgotten after about twice the learning time. Allowed values are in range 1..1000. The default value is 12 hours.
-    - **gating_max_duration_minutes** (*Optional*): Maximum duration of gating in minutes (freeze of estimator during high VOC index signal). Zero disables the gating. Allowed values are in range 0..3000. The default value is 180 minutes
+    - **gating_max_duration_minutes** (*Optional*): Maximum duration of gating in minutes (freeze of estimator during high VOC index signal). Zero disables the gating. Allowed values are in range 0..3000. The default value is 180 minutes.
     - **std_initial** (*Optional*): Initial estimate for standard deviation. Lower value boosts events during initial learning period, but may result in larger device-todevice variations. Allowed values are in range 10..5000. The default value is 50.
     - **gain_factor** (*Optional*): Gain factor to amplify or to attenuate the VOC index output. Allowed values are in range 1..1000. The default value is 230.
 
@@ -131,7 +127,7 @@ Configuration variables:
     - **index_offset** (*Optional*): NOx index representing typical (average) conditions. Allowed values are in range 1..250. The default value is 100.
     - **learning_time_offset_hours** (*Optional*): Time constant to estimate the NOx algorithm offset from the history in hours. Past events will be forgotten after about twice the  learning time. Allowed values are in range 1..1000. The default value is 12 hour
     - **learning_time_gain_hours** (*Optional*): Time constant to estimate the NOx algorithm gain from the history in hours. Past events will be forgotten after about twice the learning time. Allowed values are in range 1..1000. The default value is 12 hours.
-    - **gating_max_duration_minutes** (*Optional*): Maximum duration of gating in minutes (freeze of estimator during high NOx index signal). Zero disables the gating. Allowed values are in range 0..3000. The default value is 180 minutes
+    - **gating_max_duration_minutes** (*Optional*): Maximum duration of gating in minutes (freeze of estimator during high NOx index signal). Zero disables the gating. Allowed values are in range 0..3000. The default value is 180 minutes.
     - **std_initial** (*Optional*): The initial estimate for standard deviation parameter has no impact for NOx. This parameter is still in place for consistency reasons with the VOC tuning parameters command. This parameter must always be set to 50.
     - **gain_factor** (*Optional*): Gain factor to amplify or to attenuate the VOC index output. Allowed values are in range 1..1000. The default value is 230.
 
@@ -141,9 +137,10 @@ Configuration variables:
 
   - All other options from :ref:`Sensor <config-sensor>`.
 
+- **auto_cleaning_interval** (*Optional*): The periodic fan-cleaning interval in seconds. Note: Only available with SEN5X series. 
 - **store_baseline** (*Optional*, boolean): Stores and retrieves the baseline VOC and NOx information for quicker startups. Note only available with SEN54, SEN55, SEN65, SEN66 and SEN68. Defaults to ``true``.
-- **temperature_compensation** (*Optional*): These parameters allow to compensate temperature effects of the design-in at customer side by applying a custom temperature offset to the ambient temperature. Note: Only available with SEN54 and SEN55
-. 
+- **temperature_compensation** (*Optional*): These parameters allow to compensate temperature effects of the design-in at customer side by applying a custom temperature offset to the ambient temperature. Note: Only available with SEN54 and SEN55.
+
   The compensated ambient temperature is calculated as follows:
 
       T_Ambient_Compensated = T_Ambient + (slope*T_Ambient) + offset
@@ -156,14 +153,13 @@ Configuration variables:
   - **normalized_offset_slope** (*Optional*): Normalized temperature offset slope. Defaults to ``0``
   - **time_constant** (*Optional*): Time constant in seconds. Defaults to ``0``
 
-- **acceleration_mode** (*Optional*): Allowed value are ``low``, ``medium`` and ``high``. (default is ``low``). Note only available with SEN54 and SEN55.
+- **acceleration_mode** (*Optional*): Allowed value are ``low``, ``medium`` and ``high``. (default is ``low``). Note only available with SEN54 and SEN55. The sensor will be ignored on unsupported models.
 
   By default, the RH/T acceleration algorithm is optimized for a sensor which is positioned in free air. If the sensor is integrated into another device, the ambient RH/T output values might not be optimal due to different thermal behavior.
   This parameter can be used to adapt the RH/T acceleration behavior for the actual use-case, leading in an improvement of the ambient RH/T output accuracy. There is a limited set of different modes available.
-  Medium and high accelerations are particularly indicated for air quality monitors which are subjected to large temperature changes. Low acceleration is advised for stationary devices not subject to large variations in temperature
+  Medium and high accelerations are particularly indicated for air quality monitors which are subjected to large temperature changes. Low acceleration is advised for stationary devices not subject to large variations in temperature.
 
-- **address** (*Optional*, int): Manually specify the I²C address of the sensor.
-  Defaults to ``0x69`` for the SEN5X sensors or ``0x6b`` for the SEN6X sensors.
+- **address** (*Optional*, int): Manually specify the I²C address of the sensor. Defaults to ``0x69`` for the SEN5X sensors or ``0x6b`` for the SEN6X sensors.
 
 .. note::
 
