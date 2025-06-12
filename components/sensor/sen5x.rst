@@ -1,15 +1,17 @@
-Sen5x Series Environmental sensor
+SEN5X Series Environmental sensor
 =================================
 
 .. seo::
-    :description: Instructions for setting up Sen5x Series Environmental sensor for PM, RH/T, VOC, and NOx measurements.
+    :description: Instructions for setting up SEN5X Series Environmental sensor for PM, RH/T, VOC, and NOx measurements.
     :image: sen54.jpg
 
-The ``sen5x`` and ``sen66`` sensor platform allows you to use your Sensirion `SEN50 <https://sensirion.com/products/catalog/SEN50/>`__, `SEN54 <https://sensirion.com/products/catalog/SEN54/>`__ , `SEN55 <https://sensirion.com/products/catalog/SEN55/>`__ and `SEN66 <https://sensirion.com/products/catalog/SEN66/>`__ Environmental sensor (`datasheet <https://sensirion.com/media/documents/6791EFA0/62A1F68F/Sensirion_Datasheet_Environmental_Node_SEN5x.pdf>`__)(`sen66 datasheet <https://sensirion.com/media/documents/FAFC548D/670CCB6F/Sensirion_Datasheet_SEN6x.pdf>`__) sensors with ESPHome.
+The ``sen5x`` and ``sen6x`` sensor platform allows you to use your Sensirion `SEN50 <https://sensirion.com/products/catalog/SEN50/>`__, `SEN54 <https://sensirion.com/products/catalog/SEN54/>`__ , `SEN55 <https://sensirion.com/products/catalog/SEN55/>`__ , `SEN60 <https://sensirion.com/products/catalog/SEN60/>`__  , `SEN63C <https://sensirion.com/products/catalog/SEN63C/>`__  , `SEN65 <https://sensirion.com/products/catalog/SEN65/>`__  , `SEN66 <https://sensirion.com/products/catalog/SEN66/>`__  and `SEN68 <https://sensirion.com/products/catalog/SEN68/>`__  Environmental sensors with ESPHome.
 The :ref:`I²C Bus <i2c>` is required to be set up in your configuration for this sensor to work.
-This sensor supports both UART and I²C communication. Only I²C communication is implemented in this component.
+Only I²C communication is implemented in this component.
 
-.. _Sensirion: https://sensirion.com/products/catalog/?filter_series=ceff880a-784d-4877-ae2c-79353c6a0428
+.. _Sensirion SEN5X Series: https://sensirion.com/products/catalog/SEK-SEN5x
+.. _Sensirion SEN6X Series: https://sensirion.com/sen6x-air-quality-sensor-platform
+
 
 .. figure:: images/sen54-web.png
     :align: center
@@ -90,13 +92,16 @@ Configuration variables:
 
   - All options from :ref:`Sensor <config-sensor>`.
 
-- **co2** (*Optional*): Carbon dioxide. Note only applies to Sen66. The sensor will be ignored on unsupported models.
+- **co2** (*Optional*): Carbon dioxide (CO₂). Note only applies to SEN63C or SEN66. The sensor will be ignored on unsupported models.
+  - **auto_self_calibration** (*Optional*): True enables automatic CO₂ self calibration. False disables automatic CO₂ calibration.
+  - **altitude_compensation** (*Optional*): Enable compensating deviations due to current altitude (in meters). Notice: Set altitude_compensation or ambient_pressure_compensation_source but not both.
+  - **ambient_pressure_compensation_source** (*Optional*): Set an external pressure sensor ID used for ambient pressure compensation. The pressure sensor must report pressure in hPa. The correction is applied before updating the state of the CO₂ sensor.
 
   - All options from :ref:`Sensor <config-sensor>`.
 
-- **voc** (*Optional*): VOC Index. Note only available with Sen54 or Sen55. The sensor will be ignored on unsupported models.
+- **voc** (*Optional*): VOC Index. Note only available with SEN54, SEN55, SEN65, SEN66 and SEN68. The sensor will be ignored on unsupported models.
 
-  - **algorithm_tuning** (*Optional*): The VOC algorithm can be customized by tuning 6 different parameters. For more details see `Engineering Guidelines for SEN5x <https://sensirion.com/media/documents/25AB572C/62B463AA/Sensirion_Engineering_Guidelines_SEN5x.pdf>`__
+  - **algorithm_tuning** (*Optional*): The VOC algorithm can be customized by tuning 6 different parameters. For more details see `Engineering Guidelines for SEN5X <https://sensirion.com/media/documents/25AB572C/62B463AA/Sensirion_Engineering_Guidelines_SEN5x.pdf>`__
 
     - **index_offset** (*Optional*): VOC index representing typical (average) conditions. Allowed values are in range 1..250. The default value is 100.
     - **learning_time_offset_hours** (*Optional*): Time constant to estimate the VOC algorithm offset from the history in hours. Past events will be forgotten after about twice the  learning time. Allowed values are in range 1..1000. The default value is 12 hour
@@ -107,9 +112,8 @@ Configuration variables:
 
   - All other options from :ref:`Sensor <config-sensor>`.
 
-- **nox** (*Optional*): NOx Index. Note: Only available with Sen55. The sensor will be ignored on unsupported models.
-
-  - **algorithm_tuning** (*Optional*): The NOx algorithm can be customized by tuning 5 different parameters.For more details see `Engineering Guidelines for SEN5x <https://sensirion.com/media/documents/25AB572C/62B463AA/Sensirion_Engineering_Guidelines_SEN5x.pdf>`__
+- **nox** (*Optional*): NOx Index. Note: Only available with SEN55, SEN65, SEN66 or SEN68. The sensor will be ignored on unsupported models.
+  - **algorithm_tuning** (*Optional*): The NOx algorithm can be customized by tuning 5 different parameters. For more details see `Engineering Guidelines for SEN5x <https://sensirion.com/media/documents/25AB572C/62B463AA/Sensirion_Engineering_Guidelines_SEN5x.pdf>`__
 
     - **index_offset** (*Optional*): NOx index representing typical (average) conditions. Allowed values are in range 1..250. The default value is 100.
     - **learning_time_offset_hours** (*Optional*): Time constant to estimate the NOx algorithm offset from the history in hours. Past events will be forgotten after about twice the  learning time. Allowed values are in range 1..1000. The default value is 12 hour
@@ -120,9 +124,13 @@ Configuration variables:
 
   - All other options from :ref:`Sensor <config-sensor>`.
 
-- **store_baseline** (*Optional*, boolean): Stores and retrieves the baseline VOC and NOx information for quicker startups. Defaults to ``true``
-- **temperature_compensation** (*Optional*): These parameters allow to compensate temperature effects of the design-in at customer side by applying a custom temperature offset to the ambient temperature.
+- **hcho** (*Optional*): Formaldehyde (HCHO) in ppb. Note: Only available with SEN68. The sensor will be ignored on unsupported models.
 
+  - All other options from :ref:`Sensor <config-sensor>`.
+
+- **store_baseline** (*Optional*, boolean): Stores and retrieves the baseline VOC and NOx information for quicker startups. Note only available with SEN54, SEN55, SEN65, SEN66 and SEN68. Defaults to ``true``.
+- **temperature_compensation** (*Optional*): These parameters allow to compensate temperature effects of the design-in at customer side by applying a custom temperature offset to the ambient temperature. Note: Only available with SEN54 and SEN55
+. 
   The compensated ambient temperature is calculated as follows:
 
       T_Ambient_Compensated = T_Ambient + (slope*T_Ambient) + offset
@@ -135,7 +143,7 @@ Configuration variables:
   - **normalized_offset_slope** (*Optional*): Normalized temperature offset slope. Defaults to ``0``
   - **time_constant** (*Optional*): Time constant in seconds. Defaults to ``0``
 
-- **acceleration_mode** (*Optional*): Allowed value are ``low``, ``medium`` and ``high``. (default is ``low``)
+- **acceleration_mode** (*Optional*): Allowed value are ``low``, ``medium`` and ``high``. (default is ``low``). Note only available with SEN54 and SEN55.
 
   By default, the RH/T acceleration algorithm is optimized for a sensor which is positioned in free air. If the sensor is integrated into another device, the ambient RH/T output values might not be optimal due to different thermal behavior.
   This parameter can be used to adapt the RH/T acceleration behavior for the actual use-case, leading in an improvement of the ambient RH/T output accuracy. There is a limited set of different modes available.
@@ -152,19 +160,36 @@ Configuration variables:
 Wiring:
 -------
 
-The sensor has a JST GHR-06V-S 6 pin type connector, with a 1.25mm pitch. The cable needs this connector:
+Both the SEN5X and SEN6X sensors have a JST GHR-06V-S 6 pin type connector, with a 1.25mm pitch. The cable needs this connector:
 
 .. figure:: images/jst6pin.png
     :align: center
     :width: 50.0%
 
-To force the sensor into I²C mode, the SEL pin (Interface Select pin no.5) must be shorted to ground (pin no.2). Pin 6 is not used.
+For the SEN5X sensors:
+- 1 is connected to 5V
+- 2 is connected to ground
+- 3 is SDA
+- 4 is SCL
+- 5 is SEL, must be connected to ground in order to work with this component.
+- 6 is no-connect
 
-For better stability, the SDA and SCL lines require suitable pull-up resistors.
+For the SEN6X sensors:
+- 1 is connected to 3.3V
+- 2 is connected to ground
+- 3 is SDA
+- 4 is SCL
+- 5 is connected to ground
+- 6 is connected to 3.3V
+
+For SEN5X sensors you must connect pin no. 5 ground enabling the I²C interface. 
+Since the SEN5X sensors have a dual interface (UART/I²C) you must connect pin-5 to ground enabling the only the I²C interface. The SEN6X sensors only support an I²C interface. Pin no.5 is still connected to ground (pin no.2). Pin 6 is not used on the SEN5X sensors. But on the SEN6X sensors it can be connected VDD or (pin no. 1).
 
 Automatic Cleaning:
 -------------------
 
+The SEN5X sensors have an automatic fan-cleaning which will accelerate the built-in fan to maximum speed for 10 seconds in order to blow out the dust accumulated inside the fan. 
+The default automatic-cleaning interval is 168 hours (1 week) of uninterrupted use. Switching off the sensor resets this time counter. 
 When the module is in Measurement-Mode an automatic fan-cleaning procedure will be triggered periodically following a defined cleaning interval. This will accelerate the fan to maximum speed for 10 seconds to blow out the accumulated dust inside the fan.
 
 - Measurement values are not updated while the fan-cleaning is running.
@@ -175,23 +200,85 @@ When the module is in Measurement-Mode an automatic fan-cleaning procedure will 
 - If the sensor is switched off, the time counter is reset to 0. Make sure to trigger a cleaning cycle at least every week if the sensor is switched off and on periodically (e.g., once per day).
 - The cleaning procedure can also be started manually with the ``start_autoclean_fan`` Action
 
-The Sen5x sensor has an automatic fan-cleaning which will accelerate the built-in fan to maximum speed for 10 seconds in order to blow out the dust accumulated inside the fan.
-The default automatic-cleaning interval is 168 hours (1 week) of uninterrupted use. Switching off the sensor resets this time counter.
+The SEN6X sensor supports fan cleaning but not the automatic fan cleaning interval.
 
-.. _start_autoclean_fan_action:
+.. _start_fan_autoclean_action:
 
 ``sen5x.start_fan_autoclean`` Action
 ------------------------------------
 
-This :ref:`action <config-action>` manually starts fan-cleaning.
+This :ref:`action <config-action>` manually starts a fan-cleaning cycle .
 
 .. code-block:: yaml
+      on_...:
+        then:
+          - sen5x.start_fan_autoclean: my_sen54
 
-    on_...:
-      then:
-        - sen5x.start_fan_autoclean: sen54
+CO₂ Calibration and Compensation:
+-------------------
+The CO₂ sensor by default has auto-calibration enabled. Auto-calibration will adjust the minimum measurement over the last week or so to the outdoor average of slightly more than 400 ppm. 
+Auto-calibration assumes that you are opening the windows at least once a week. If you don't open the windows then over time the CO₂ level will tend downward. 
+For example, over the last week the actual CO₂ minimum was 600 ppm. Auto-calibration will make that 400 ppm which is actually low by 200 ppm.
 
+If you know your minimums are not going to be 400 ppm then you can disable auto-calibration, and occasionally take the sensor outside for 5 minutes and then force a manual CO₂ calibration.
 
+Only the SEN63C and the SEN66 have a CO₂ sensor.
+
+.. _perform_forced_co2_calibration:
+
+``sen5x.perform_forced_co2_calibration`` Action
+------------------------------------
+
+This :ref:`action <config-action>` forces a manual calibration on the CO₂ sensor. Basically, the unit is forced to make current measurements equal to the specified value.
+
+.. code-block:: yaml
+  number:
+    - platform: template
+      id: co2_forced_cal_value
+      name: "CO2 Calibration Value"
+      device_class: carbon_dioxide
+      entity_category: CONFIG
+      optimistic: true
+      max_value: 1200
+      min_value: 400
+      step: 1
+      initial_value: 420
+      set_action:
+        - delay: 1s
+  button:
+    - platform: template
+      name: "CO2 Calibrate"
+      entity_category: CONFIG
+      on_press:
+        - sen5x.perform_forced_co2_calibration:
+            value: !lambda |-
+              float value = id(co2_forced_cal_value).state;
+              return value;
+            id: sen66_sensor
+
+The CO₂ sensor also supports pressure compensation. You can either add ``ambient_pressure_compensation_source`` to your configuration or you can occasionally call the ``sen5x.set_ambient_pressure_compensation`` action.
+
+.. _set_ambient_pressure_compensation:
+
+``sen5x.set_ambient_pressure_compensation`` Action
+------------------------------------
+
+This :ref:`action <config-action>` updates the current pressure used in CO₂ pressure compensation. Must be hPa or mbar.
+
+.. code-block:: yaml
+  sensor:
+    - platform: copy
+      id: pressure_to_sen6x
+      source_id: pressure
+      unit_of_measurement: hPa
+      filters:
+        - lambda: |-
+            // convert Pa to hPa (or mBar)
+            return x / 100.0;
+      on_value:
+        then:
+          - lambda: !lambda |-
+              id(sen66_sensor)->set_ambient_pressure_compensation(x);
 
 
 See Also
@@ -205,5 +292,6 @@ See Also
 - :doc:`scd4x`
 - :doc:`sps30`
 - :doc:`sgp4x`
+- :doc:`sht4x`
 - :apiref:`sen5x/sen5x.h`
 - :ghedit:`Edit`
